@@ -1,87 +1,89 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>情侣生活记录</title>
-  </head>
-  <body>
-    <h1>情侣生活记录</h1>
-    <form>
-      <label>日期：</label>
-      <input type="date" id="date">
-      <br>
-      <label>事件：</label>
-      <input type="text" id="event">
-      <br>
-      <button type="button" onclick="addRecord()">添加记录</button>
-    </form>
-    <ul id="records"></ul>
-    <script>
-      // 从本地存储中读取记录
-      var records = JSON.parse(localStorage.getItem("records")) || [];
+    <title>燃放烟花和“雪雪520”字样</title>
+    <style>
+      /* 隐藏所有烟花 */
+      .firework {
+        display: none;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
 
-      // 获取表单元素和记录列表元素
-      var dateInput = document.getElementById("date");
-      var eventInput = document.getElementById("event");
-      var recordsList = document.getElementById("records");
+      /* 显示烟花动画 */
+      .firework.active {
+        display: block;
+        animation: firework 1s ease-out;
+      }
 
-      // 渲染记录列表
-      function renderRecords() {
-        recordsList.innerHTML = "";
-        for (var i = 0; i < records.length; i++) {
-          var recordItem = document.createElement("li");
-          recordItem.textContent = records[i].date + "：" + records[i].event;
-
-          // 添加删除按钮
-          var deleteButton = document.createElement("button");
-          deleteButton.textContent = "删除";
-          deleteButton.dataset.index = i; // 保存记录在数组中的索引
-          deleteButton.addEventListener("click", deleteRecord); // 绑定删除事件
-          recordItem.appendChild(deleteButton);
-
-          recordsList.appendChild(recordItem);
+      /* 定义烟花动画 */
+      @keyframes firework {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.5);
+        }
+        100% {
+          transform: scale(1);
         }
       }
 
-      // 添加记录函数
-      function addRecord() {
-        // 获取输入的日期和事件
-        var date = dateInput.value;
-        var event = eventInput.value;
+      /* 定义字体样式 */
+      .text {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        font-size: 72px;
+        font-family: 'STXinwei', cursive;
+        color: #F08080;
+        text-shadow: 2px 2px #FFFFFF;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 烟花效果 -->
+    <div id="fireworks">
+      <div class="firework"></div>
+      <div class="firework"></div>
+      <div class="firework"></div>
+      <div class="firework"></div>
+      <div class="firework"></div>
+      <div class="firework"></div>
+      <div class="firework"></div>
+      <div class="firework"></div>
+      <div class="firework"></div>
+      <div class="firework"></div>
+    </div>
 
-        // 将记录添加到数组中
-        records.push({
-          date: date,
-          event: event
-        });
+    <!-- 文字效果 -->
+    <div class="text">雪雪520</div>
 
-        // 保存记录到本地存储
-        localStorage.setItem("records", JSON.stringify(records));
+    <!-- JavaScript 代码 -->
+    <script>
+      // 定义烟花动画循环函数
+      function fireworksLoop() {
+        // 获取所有烟花元素
+        var fireworks = document.querySelectorAll(".firework");
 
-        // 渲染记录列表
-        renderRecords();
+        // 为每个烟花元素添加 active 类，触发烟花动画
+        for (var i = 0; i < fireworks.length; i++) {
+          fireworks[i].classList.add("active");
+        }
 
-        // 清空表单
-        dateInput.value = "";
-        eventInput.value = "";
+        // 移除 active 类，重置烟花动画
+        setTimeout(function() {
+          for (var i = 0; i < fireworks.length; i++) {
+            fireworks[i].classList.remove("active");
+          }
+        }, 1000);
       }
 
-      // 删除记录函数
-      function deleteRecord(event) {
-        // 获取要删除的记录在数组中的索引
-        var index = event.target.dataset.index;
-
-        // 从数组中删除记录
-        records.splice(index, 1);
-
-        // 保存记录到本地存储
-        localStorage.setItem("records", JSON.stringify(records));
-
-        // 渲染记录列表
-        renderRecords();
-      }
-
-      // 初始化页面，渲染记录列表
-      renderRecords();
+      // 设置定时器，每 3 秒触发一次烟花动画循环
+      setInterval(fireworksLoop, 3000);
     </script>
   </body>
 </html>
