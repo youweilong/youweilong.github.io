@@ -1,89 +1,48 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>燃放烟花和“雪雪520”字样</title>
+    <meta charset="UTF-8">
+    <title>燃放烟花</title>
     <style>
-      /* 隐藏所有烟花 */
-      .firework {
-        display: none;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      /* 显示烟花动画 */
-      .firework.active {
-        display: block;
-        animation: firework 1s ease-out;
-      }
-
-      /* 定义烟花动画 */
-      @keyframes firework {
+      @keyframes fireworks {
         0% {
+          opacity: 0;
           transform: scale(1);
         }
-        50% {
+        10% {
+          opacity: 1;
+          transform: scale(1.5);
+        }
+        90% {
+          opacity: 0;
           transform: scale(1.5);
         }
         100% {
+          opacity: 0;
           transform: scale(1);
         }
       }
 
-      /* 定义字体样式 */
-      .text {
+      body {
+        background-color: black;
+      }
+
+      #title {
         position: absolute;
-        left: 50%;
         top: 50%;
-        font-size: 72px;
-        font-family: 'STXinwei', cursive;
-        color: #F08080;
-        text-shadow: 2px 2px #FFFFFF;
+        left: 50%;
         transform: translate(-50%, -50%);
+        font-family: 'Segoe Script', cursive;
+        font-size: 100px;
+        font-weight: bold;
+        color: pink;
+        text-shadow: 2px 2px 0 #ff69b4;
+        opacity: 0;
+        animation: fireworks 3s ease-in-out forwards;
       }
     </style>
   </head>
   <body>
-    <!-- 烟花效果 -->
-    <div id="fireworks">
-      <div class="firework"></div>
-      <div class="firework"></div>
-      <div class="firework"></div>
-      <div class="firework"></div>
-      <div class="firework"></div>
-      <div class="firework"></div>
-      <div class="firework"></div>
-      <div class="firework"></div>
-      <div class="firework"></div>
-      <div class="firework"></div>
-    </div>
-
-    <!-- 文字效果 -->
-    <div class="text">雪雪520</div>
-
-    <!-- JavaScript 代码 -->
-    <script>
-      // 定义烟花动画循环函数
-      function fireworksLoop() {
-        // 获取所有烟花元素
-        var fireworks = document.querySelectorAll(".firework");
-
-        // 为每个烟花元素添加 active 类，触发烟花动画
-        for (var i = 0; i < fireworks.length; i++) {
-          fireworks[i].classList.add("active");
-        }
-
-        // 移除 active 类，重置烟花动画
-        setTimeout(function() {
-          for (var i = 0; i < fireworks.length; i++) {
-            fireworks[i].classList.remove("active");
-          }
-        }, 1000);
-      }
-
-      // 设置定时器，每 3 秒触发一次烟花动画循环
-      setInterval(fireworksLoop, 3000);
-    </script>
+    <h1 id="title">雪雪520</h1>
   </body>
 </html>
