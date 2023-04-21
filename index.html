@@ -7,7 +7,7 @@
     <h1>情侣生活记录</h1>
     <form>
       <label>日期：</label>
-      <input type="text" id="date">
+      <input type="date" id="date">
       <br>
       <label>事件：</label>
       <input type="text" id="event">
@@ -19,7 +19,7 @@
       // 从本地存储中读取记录
       var records = JSON.parse(localStorage.getItem("records")) || [];
 
-      // 获取表单元素
+      // 获取表单元素和记录列表元素
       var dateInput = document.getElementById("date");
       var eventInput = document.getElementById("event");
       var recordsList = document.getElementById("records");
@@ -30,6 +30,14 @@
         for (var i = 0; i < records.length; i++) {
           var recordItem = document.createElement("li");
           recordItem.textContent = records[i].date + "：" + records[i].event;
+
+          // 添加删除按钮
+          var deleteButton = document.createElement("button");
+          deleteButton.textContent = "删除";
+          deleteButton.dataset.index = i; // 保存记录在数组中的索引
+          deleteButton.addEventListener("click", deleteRecord); // 绑定删除事件
+          recordItem.appendChild(deleteButton);
+
           recordsList.appendChild(recordItem);
         }
       }
@@ -55,6 +63,21 @@
         // 清空表单
         dateInput.value = "";
         eventInput.value = "";
+      }
+
+      // 删除记录函数
+      function deleteRecord(event) {
+        // 获取要删除的记录在数组中的索引
+        var index = event.target.dataset.index;
+
+        // 从数组中删除记录
+        records.splice(index, 1);
+
+        // 保存记录到本地存储
+        localStorage.setItem("records", JSON.stringify(records));
+
+        // 渲染记录列表
+        renderRecords();
       }
 
       // 初始化页面，渲染记录列表
